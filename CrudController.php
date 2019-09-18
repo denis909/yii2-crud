@@ -2,7 +2,7 @@
 
 namespace denis909\yii;
 
-class CrudController extends \yii\web\Controller
+abstract class CrudController extends \yii\web\Controller
 {
 
 	public $defaultAction = 'index';
