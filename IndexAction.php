@@ -7,12 +7,10 @@ use Exception;
 use Yii;
 use yii\helpers\ArrayHelper;
 
-class ReadAction extends BaseAction
+class IndexAction extends BaseAction
 {
 
 	public $searchModelClass;
-
-	public $ownerClass;
 
 	public $parentId;
 

@@ -16,6 +16,10 @@ abstract class BaseAction extends \yii\base\Action
 	public $modelClass;
 		
 	public $returnUrl;
+
+    public $ownerClass;
+
+    public $ownerIndex = 'parentId';
 		
 	public function returnUrl()
 	{
@@ -69,7 +73,7 @@ abstract class BaseAction extends \yii\base\Action
 		{
 			$ownerClass = $this->ownerClass;
 
-			$ownerId = Yii::$app->request->get('ownerId');
+			$ownerId = Yii::$app->request->get($this->ownerIndex);
 
 			if (!$ownerId)
 			{

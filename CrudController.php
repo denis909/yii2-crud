@@ -15,6 +15,8 @@ abstract class CrudController extends \yii\web\Controller
 
 	public $ownerClass;
 
+    public $ownerIndex = 'ownerId';
+
 	public $parentId;
 
 	public $postActions = ['delete'];
@@ -25,18 +27,20 @@ abstract class CrudController extends \yii\web\Controller
 	{
 		return [
 			'index' => [
-				'class' => ReadAction::className(),
+				'class' => IndexAction::className(),
 				'modelClass' => $this->modelClass,
 				'searchModelClass' => $this->searchModelClass,
 				'ownerClass' => $this->ownerClass,
 				'parentId' => $this->parentId,
-				'dataProvider' => $this->dataProvider
+				'dataProvider' => $this->dataProvider,
+                'ownerIndex' => $this->ownerIndex
 			],
 			'create' => [
 				'class' => CreateAction::className(),
 				'modelClass' => $this->formModelClass,
 				'ownerClass' => $this->ownerClass,
-				'parentId' => $this->parentId
+				'parentId' => $this->parentId,
+                'ownerIndex' => $this->ownerIndex
 			],
 			'update' => [
 				'class' => UpdateAction::className(),
