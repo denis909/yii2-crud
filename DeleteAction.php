@@ -6,13 +6,13 @@ use Yii;
 class DeleteAction extends BaseAction
 {
 
-	public function run()
-	{
-		$model = $this->loadModel();
-						
-		$model->delete();
-	
-		return $this->redirectBack();
-	}
+    public function run()
+    {
+        $model = $this->loadModel();
+                        
+        $model->delete();
+    
+        return $this->redirectBack();
+    }
 
 }

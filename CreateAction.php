@@ -7,46 +7,46 @@ use Yii;
 class CreateAction extends BaseAction
 {
 
-	public $template = 'create';
-	
-	public $scenario;
+    public $template = 'create';
+    
+    public $scenario;
 
-	public $ownerClass;
+    public $ownerClass;
 
-	public $parentId;
-	
-	public function run()
-	{
-		$ownerModel = $this->loadOwner();
+    public $parentId;
+    
+    public function run()
+    {
+        $ownerModel = $this->loadOwner();
 
-		$className = $this->modelClass;
-			
-		$model = new $className;
+        $className = $this->modelClass;
+            
+        $model = new $className;
 
-		if ($ownerModel)
-		{
-			$model->setOwner($ownerModel);
-		}
+        if ($ownerModel)
+        {
+            $model->setOwner($ownerModel);
+        }
 
-		if ($this->scenario != FALSE)
-		{
-			$model->scenario = $this->scenario;
-		}
+        if ($this->scenario != FALSE)
+        {
+            $model->scenario = $this->scenario;
+        }
 
-		$model->loadDefaultValues(true);
+        $model->loadDefaultValues(true);
 
-		if ($model->load(Yii::$app->request->post()))
-		{
-			if ($model->save())
-			{
-				return $this->redirectBack();
-			}
-		}
+        if ($model->load(Yii::$app->request->post()))
+        {
+            if ($model->save())
+            {
+                return $this->redirectBack();
+            }
+        }
 
-		return $this->render($this->template, [
-			'model' => $model,
-			'ownerModel' => $ownerModel
-		]);
-	}
-	
+        return $this->render($this->template, [
+            'model' => $model,
+            'ownerModel' => $ownerModel
+        ]);
+    }
+    
 }
