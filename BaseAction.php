@@ -11,6 +11,8 @@ use Exception;
 abstract class BaseAction extends \yii\base\Action
 {
 
+    const ACTION_SAVE = 'save';
+
     public $viewParams = [];
     
     public $modelClass;
@@ -20,6 +22,8 @@ abstract class BaseAction extends \yii\base\Action
     public $ownerClass;
 
     public $ownerIndex = 'parentId';
+
+    public $i18nCategory = 'app';
         
     public function returnUrl()
     {

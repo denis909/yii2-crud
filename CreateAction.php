@@ -35,9 +35,19 @@ class CreateAction extends BaseAction
 
         $model->loadDefaultValues(true);
 
-        if ($model->load(Yii::$app->request->post()))
+        if ($model->load(Yii::$app->request->post()) && $model->save())
         {
-            if ($model->save())
+            if (Yii::$app->request->post('action') == static::ACTION_SAVE)
+            {
+                Yii::$app->session->addFlash('success', Yii::t($this->i18nCategory, 'Data saved.'));
+
+                return $this->controller->redirect([
+                    'update', 
+                    'id' => $model->primaryKey,
+                    'returnUrl' => Yii::$app->request->get('returnUrl')
+                ]);
+            }
+            else
             {
                 return $this->redirectBack();
             }

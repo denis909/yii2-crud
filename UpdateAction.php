@@ -20,9 +20,13 @@ class UpdateAction extends BaseAction
             $model->scenario = $this->scenario;
         }
 
-        if ($model->load(Yii::$app->request->post()))
+        if ($model->load(Yii::$app->request->post()) && $model->save())
         {
-            if ($model->save())
+            if (Yii::$app->request->post('action') == static::ACTION_SAVE)
+            {
+                Yii::$app->session->addFlash('success', Yii::t($this->i18nCategory, 'Data saved.'));
+            }
+            else
             {
                 return $this->redirectBack();
             }
