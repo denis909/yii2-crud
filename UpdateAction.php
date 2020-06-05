@@ -3,6 +3,7 @@
 namespace denis909\yii;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 class UpdateAction extends BaseAction
 {
@@ -10,6 +11,8 @@ class UpdateAction extends BaseAction
     public $template = 'update';
     
     public $scenario;
+
+    public $params = [];
 
     public function loadModel($model, $data)
     {
@@ -28,7 +31,7 @@ class UpdateAction extends BaseAction
 
     public function run()
     {       
-        $model = $this->controller->findModel(Yii::$app->request->get('id'), $this->modelClass);
+        $model = $this->findModel(Yii::$app->request->get('id'), $this->modelClass);
         
         if ($this->scenario)
         {
@@ -46,13 +49,12 @@ class UpdateAction extends BaseAction
                 return $this->redirectBack();
             }
         }
+
+        $params = ArrayHelper::merge($this->params, [
+            'model' => $model
+        ]);
         
-        return $this->render(
-            $this->template,
-            array(
-                'model' => $model
-            )
-        );
+        return $this->render($this->template, $params);
     }
 
 }

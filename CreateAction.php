@@ -3,6 +3,7 @@
 namespace denis909\yii;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 class CreateAction extends BaseAction
 {
@@ -14,6 +15,8 @@ class CreateAction extends BaseAction
     public $ownerClass;
 
     public $parentId;
+
+    public $params = [];
 
     public function loadModel($model, $data)
     {
@@ -68,10 +71,12 @@ class CreateAction extends BaseAction
             }
         }
 
-        return $this->render($this->template, [
+        $params = ArrayHelper::merge($this->params, [
             'model' => $model,
             'ownerModel' => $ownerModel
         ]);
+
+        return $this->render($this->template, $params);
     }
     
 }

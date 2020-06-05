@@ -81,4 +81,9 @@ abstract class BaseAction extends \yii\base\Action
         return $ownerModel;     
     }
 
+    public function findModel($id, $class = null)
+    {
+        return $this->controller->findModel($id, $class = null);
+    }
+
 }
