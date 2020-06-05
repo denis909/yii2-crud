@@ -28,9 +28,9 @@ class UpdateAction extends BaseAction
 
     public function run()
     {       
-        $model = $this->controller->findModel();
+        $model = $this->controller->findModel(Yii::$app->request->get('id'), $this->modelClass);
         
-        if ($this->scenario != FALSE)
+        if ($this->scenario)
         {
             $model->scenario = $this->scenario;
         }
