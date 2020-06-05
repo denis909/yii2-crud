@@ -83,7 +83,7 @@ abstract class BaseAction extends \yii\base\Action
 
     public function findModel($id, $class = null)
     {
-        return $this->controller->findModel($id, $class = null);
+        return $this->controller->findModel($id, $class);
     }
 
 }
