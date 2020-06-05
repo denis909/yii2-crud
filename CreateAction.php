@@ -14,6 +14,21 @@ class CreateAction extends BaseAction
     public $ownerClass;
 
     public $parentId;
+
+    public function loadModel($model, $data)
+    {
+        return $model->load($data);
+    }
+
+    public function saveModel($model, $validate = true, $attributes = null)
+    {
+        return $model->save($validate, $attributes);
+    }
+
+    public function validateModel($model, $attributes = null)
+    {
+        return $model->validate($attributes);
+    }
     
     public function run()
     {
@@ -35,7 +50,7 @@ class CreateAction extends BaseAction
 
         $model->loadDefaultValues(true);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save())
+        if ($this->loadModel($model, Yii::$app->request->post()) && $this->saveModel($model))
         {
             if (Yii::$app->request->post('action') == static::ACTION_SAVE)
             {

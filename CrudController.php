@@ -2,8 +2,16 @@
 
 namespace denis909\yii;
 
-class CrudController extends \yii\web\Controller
+class CrudController extends \denis909\yii\Controller
 {
+
+    public $indexAction = IndexAction::class;
+
+    public $createAction = CreateAction::class;
+
+    public $updateAction = UpdateAction::class;
+
+    public $deleteAction = DeleteAction::class;
 
     public $defaultAction = 'index';
 
@@ -29,7 +37,7 @@ class CrudController extends \yii\web\Controller
     {
         return [
             'index' => [
-                'class' => IndexAction::class,
+                'class' => $this->indexAction,
                 'i18nCategory' => $this->i18nCategory,
                 'modelClass' => $this->modelClass,
                 'searchModelClass' => $this->searchModelClass,
@@ -39,7 +47,7 @@ class CrudController extends \yii\web\Controller
                 'ownerIndex' => $this->ownerIndex
             ],
             'create' => [
-                'class' => CreateAction::class,
+                'class' => $this->createAction,
                 'i18nCategory' => $this->i18nCategory,
                 'modelClass' => $this->formModelClass,
                 'ownerClass' => $this->ownerClass,
@@ -47,12 +55,12 @@ class CrudController extends \yii\web\Controller
                 'ownerIndex' => $this->ownerIndex
             ],
             'update' => [
-                'class' => UpdateAction::class,
+                'class' => $this->updateAction,
                 'i18nCategory' => $this->i18nCategory,
                 'modelClass' => $this->formModelClass
             ],
             'delete' => [
-                'class' => DeleteAction::class,
+                'class' => $this->deleteAction,
                 'i18nCategory' => $this->i18nCategory,
                 'modelClass' => $this->modelClass
             ]

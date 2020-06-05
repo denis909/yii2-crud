@@ -55,20 +55,6 @@ abstract class BaseAction extends \yii\base\Action
         return $this->controller->render($template, $params);
     }
 
-    public function loadModel()
-    {
-        $className = $this->modelClass;
-            
-        $model = $className::findOne(Yii::$app->request->get('id'));
-        
-        if (!$model)
-        {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-
-        return $model;
-    }
-
     protected function loadOwner()
     {
         $ownerModel = null;
