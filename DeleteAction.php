@@ -8,7 +8,7 @@ class DeleteAction extends BaseAction
 
     public function run()
     {
-        $model = $this->loadModel();
+        $model = $this->findModel(Yii::$app->request->get('id'), $this->controller->modelClass);
                         
         $model->delete();
     

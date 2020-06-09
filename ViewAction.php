@@ -13,16 +13,7 @@ class ViewAction extends BaseAction
 
     public function run()
     {
-        parent::run();
-        
-        $className = $this->modelClassName;
-            
-        $model = $className::findOne(Yii::$app->request->get('id'));
-        
-        if ($model == FALSE)
-        {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
+        $model = $this->findModel(Yii::$app->request->get('id'), $this->controller->modelClass);
                 
         if ($this->beforeRender != FALSE)
         {
