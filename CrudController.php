@@ -13,6 +13,8 @@ class CrudController extends \denis909\yii\Controller
 
     public $deleteAction = DeleteAction::class;
 
+    public $viewAction = ViewAction::class;
+
     public $defaultAction = 'index';
 
     public $modelClass;
@@ -58,6 +60,11 @@ class CrudController extends \denis909\yii\Controller
                 'class' => $this->updateAction,
                 'i18nCategory' => $this->i18nCategory,
                 'modelClass' => $this->formModelClass
+            ],
+            'view' => [
+                'class' => $this->viewAction,
+                'i18nCategory' => $this->i18nCategory,
+                'modelClass' => $this->modelClass
             ],
             'delete' => [
                 'class' => $this->deleteAction,

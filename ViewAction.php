@@ -2,6 +2,7 @@
 
 namespace denis909\yii;
 
+use Yii;
 use yii\web\NotFoundHttpException;
 
 class ViewAction extends BaseAction
