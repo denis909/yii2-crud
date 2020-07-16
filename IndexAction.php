@@ -66,11 +66,11 @@ class IndexAction extends BaseAction
     
         return $this->controller->render(
             $this->templateName,
-            array(
+            $this->getParams([
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
                 'ownerModel' => $ownerModel
-            )
+            ])
         );
     }
 

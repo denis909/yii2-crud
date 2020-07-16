@@ -50,9 +50,11 @@ class UpdateAction extends BaseAction
             }
         }
 
-        $params = ArrayHelper::merge($this->params, [
-            'model' => $model
-        ]);
+        $params = $this->getParams(
+            ArrayHelper::merge($this->params, [
+                'model' => $model
+            ])
+        );
         
         return $this->render($this->template, $params);
     }

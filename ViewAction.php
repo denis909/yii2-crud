@@ -28,9 +28,9 @@ class ViewAction extends BaseAction
         
         return $this->controller->render(
             $this->templateName,
-            array(
+            $this->getParams([
                 'model' => $model
-            )
+            ])
         );
     }
 

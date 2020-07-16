@@ -71,10 +71,12 @@ class CreateAction extends BaseAction
             }
         }
 
-        $params = ArrayHelper::merge($this->params, [
-            'model' => $model,
-            'ownerModel' => $ownerModel
-        ]);
+        $params = $this->getParams( 
+            ArrayHelper::merge($this->params, [
+                'model' => $model,
+                'ownerModel' => $ownerModel
+            ])
+        );
 
         return $this->render($this->template, $params);
     }
