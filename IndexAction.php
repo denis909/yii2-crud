@@ -10,40 +10,41 @@ use yii\helpers\ArrayHelper;
 class IndexAction extends BaseAction
 {
 
-    public $searchModelClass;
-
-    public $parentId;
-
-    public $templateName = 'index';
-    
-    public $pageSize = 10;
-
-    public $dataProvider = [];
-
-    public $defaultDataProvider = [
-        'pagination' => [
-            'pageSize' => 10
-        ]
-    ];
-    
+    public $template = 'index';
+        
     public function run()
     {
-        $className = $this->modelClass;
+        $className = $this->controller->modelClass;
 
         $query = $className::find();
 
-        $ownerModel = $this->loadOwner();
+        $parentModel = null;
 
-        if ($ownerModel)
+        $parentModelClass = $this->controller->parentModelClass;
+
+        if ($parentModelClass)
         {
-            $query->ownerId($ownerModel->id);
+            Assert::notEmpty($this->controller->parentAttribute, 'Parent attribute not defined.');
+
+            $parentIndex = Inflector::attribute2camel($this->controller->parentAttribute);
+
+            $parentId = Yii::$app->request->get($parentIndex);
+
+            if (!$parentId)
+            {
+                throw new Exception('Parent ID not defined.');
+            }
+
+            $parentModel = $this->findModel($parentId, $parentModelClass);
+
+            $query->andWhere([$this->controller->parentAttribute => $parentModel->primaryKey]);
         }
 
-        if ($this->searchModelClass)
+        $searchModelClass = $this->controller->searchModelClass;
+
+        if ($searchClass)
         {
-            $searchModelClass = $this->searchModelClass;
-        
-            $searchModel = new $searchModelClass;
+            $searchModel = Yii::createObject($searchModelClass);
 
             $searchModel->load(Yii::$app->request->get());
 
@@ -53,25 +54,21 @@ class IndexAction extends BaseAction
         {
             $searchModel = null;
         }
-        
-        $dataProvider = new ActiveDataProvider(
-            ArrayHelper::merge(
-                array(
-                    'query' => $query
-                ),
-                $this->defaultDataProvider,
-                $this->dataProvider
-            )
-        );
+
+        $dataProvider = Yii::createObject(ArrayHelper::merge(
+            [
+                'class' => ActiveDataProvider::class,
+                'query' => $query
+            ],
+            $this->controller->defaultDataProvider,
+            $this->controller->dataProvider
+        ));
     
-        return $this->controller->render(
-            $this->templateName,
-            $this->getParams([
-                'dataProvider' => $dataProvider,
-                'searchModel' => $searchModel,
-                'ownerModel' => $ownerModel
-            ])
-        );
+        return $this->render($this->template, [
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'parentModel' => $parentModel
+        ]);
     }
 
 }

@@ -7,6 +7,8 @@
         }
     },
     "require": {
-        "denis909/yii2-controller" : "*"
+        "denis909/yii2-controller" : "*",
+        "denis909/yii2-assert" : "*",
+        "denis909/yii2-inflector" : "*"
     }
 }
