@@ -30,12 +30,6 @@ class CrudController extends \denis909\yii\Controller
     public $pageSize = 10;
 
     public $dataProvider = [];
-
-    public $defaultDataProvider = [
-        'pagination' => [
-            'pageSize' => 10
-        ]
-    ];
     
     public function actions()
     {

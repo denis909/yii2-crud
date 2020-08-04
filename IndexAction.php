@@ -35,14 +35,14 @@ class IndexAction extends BaseAction
                 throw new Exception('Parent ID not defined.');
             }
 
-            $parentModel = $this->findModel($parentId, $parentModelClass);
+            $parentModel = $this->controller->findModel($parentId, $parentModelClass);
 
             $query->andWhere([$this->controller->parentAttribute => $parentModel->primaryKey]);
         }
 
         $searchModelClass = $this->controller->searchModelClass;
 
-        if ($searchClass)
+        if ($searchModelClass)
         {
             $searchModel = Yii::createObject($searchModelClass);
 
@@ -58,9 +58,11 @@ class IndexAction extends BaseAction
         $dataProvider = Yii::createObject(ArrayHelper::merge(
             [
                 'class' => ActiveDataProvider::class,
-                'query' => $query
+                'query' => $query,
+                'pagination' => [
+                    'pageSize' => $this->controller->pageSize
+                ]
             ],
-            $this->controller->defaultDataProvider,
             $this->controller->dataProvider
         ));
     
