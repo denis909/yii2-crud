@@ -16,7 +16,7 @@ class IndexAction extends BaseAction
     {
         $className = $this->controller->modelClass;
 
-        $query = $className::find();
+        $query = $this->controller->createModelQuery($className);
 
         $parentModel = null;
 
