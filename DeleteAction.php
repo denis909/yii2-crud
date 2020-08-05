@@ -2,17 +2,21 @@
 
 namespace denis909\yii;
 use Yii;
+use Exception;
 
 class DeleteAction extends BaseAction
 {
 
     public function run()
     {
-        $model = $this->findModel(Yii::$app->request->get('id'), $this->controller->modelClass);
+        $model = $this->controller->findModel(Yii::$app->request->get('id'), $this->controller->modelClass);
                         
-        $model->delete();
+        if (!$this->controller->deleteModel($model))
+        {
+            throw new Exception('Model not deleted.');
+        }
     
-        return $this->redirectBack();
+        return $this->controller->redirectBack();
     }
 
 }
