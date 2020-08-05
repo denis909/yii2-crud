@@ -12,51 +12,30 @@ class UpdateAction extends BaseAction
     
     public $scenario;
 
-    public $params = [];
-
-    public function loadModel($model, $data)
-    {
-        return $model->load($data);
-    }
-
-    public function saveModel($model, $validate = true, $attributes = null)
-    {
-        return $model->save($validate, $attributes);
-    }
-
-    public function validateModel($model, $attributes = null)
-    {
-        return $model->validate($attributes);
-    }
-
     public function run()
     {       
-        $model = $this->findModel(Yii::$app->request->get('id'), $this->controller->modelClass);
+        $model = $this->controller->findModel(Yii::$app->request->get('id'), $this->controller->formModelClass);
         
         if ($this->scenario)
         {
             $model->scenario = $this->scenario;
         }
 
-        if ($this->loadModel($model, Yii::$app->request->post()) && $this->saveModel($model))
+        if ($this->controller->loadModel($model, Yii::$app->request->post()) && $this->controller->saveModel($model))
         {
             if (Yii::$app->request->post('action') == static::ACTION_SAVE)
             {
-                Yii::$app->session->addFlash('success', Yii::t($this->i18nCategory, 'Data saved.'));
+                Yii::$app->session->addFlash('success', Yii::t($this->controller->i18nCategory, 'Data saved.'));
             }
             else
             {
-                return $this->redirectBack();
+                return $this->controller->redirectBack();
             }
         }
-
-        $params = $this->getParams(
-            ArrayHelper::merge($this->params, [
-                'model' => $model
-            ])
-        );
         
-        return $this->render($this->template, $params);
+        return $this->render($this->template, [
+            'model' => $model
+        ]);
     }
 
 }

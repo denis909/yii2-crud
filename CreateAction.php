@@ -11,27 +11,12 @@ class CreateAction extends BaseAction
     public $template = 'create';
     
     public $scenario;
-
-    public function loadModel($model, $data)
-    {
-        return $model->load($data);
-    }
-
-    public function saveModel($model, $validate = true, $attributes = null)
-    {
-        return $model->save($validate, $attributes);
-    }
-
-    public function validateModel($model, $attributes = null)
-    {
-        return $model->validate($attributes);
-    }
     
     public function run()
     {
-        $className = $this->controller->modelClass;
-            
-        $model = Yii::createObject($className);
+        $className = $this->controller->formModelClass;
+
+        $model = $this->controller->createModel($className);
 
         $parentModelClass = $this->controller->parentModelClass;
 
@@ -60,7 +45,7 @@ class CreateAction extends BaseAction
 
         $model->loadDefaultValues(true);
 
-        if ($this->loadModel($model, Yii::$app->request->post()) && $this->saveModel($model))
+        if ($this->controller->loadModel($model, Yii::$app->request->post()) && $this->controller->saveModel($model))
         {
             if (Yii::$app->request->post('action') == static::ACTION_SAVE)
             {
