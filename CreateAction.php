@@ -12,12 +12,6 @@ class CreateAction extends BaseAction
     
     public $scenario;
 
-    public $ownerClass;
-
-    public $parentId;
-
-    public $params = [];
-
     public function loadModel($model, $data)
     {
         return $model->load($data);
@@ -35,18 +29,31 @@ class CreateAction extends BaseAction
     
     public function run()
     {
-        $ownerModel = $this->loadOwner();
-
-        $className = $this->modelClass;
+        $className = $this->controller->modelClass;
             
-        $model = new $className;
+        $model = Yii::createObject($className);
 
-        if ($ownerModel)
+        $parentModelClass = $this->controller->parentModelClass;
+
+        if ($parentModelClass)
         {
-            $model->setOwner($ownerModel);
+            Assert::notEmpty($this->controller->parentAttribute);
+
+            $parentIndex = Inflector::attribute2camel($this->controller->parentAttribute);
+
+            $parentId = Yii::$app->request->get($parentIndex);
+
+            if (!$parentId)
+            {
+                throw new Exception('Parent ID not defined.');
+            }
+
+            $parentModel = $this->controller->findModel($parentId, $parentModelClass);
+
+            $model->{$this->controller->parentAttribute} = $parentModel->primaryKey;
         }
 
-        if ($this->scenario != FALSE)
+        if ($this->scenario)
         {
             $model->scenario = $this->scenario;
         }
@@ -57,7 +64,7 @@ class CreateAction extends BaseAction
         {
             if (Yii::$app->request->post('action') == static::ACTION_SAVE)
             {
-                Yii::$app->session->addFlash('success', Yii::t($this->i18nCategory, 'Data saved.'));
+                Yii::$app->session->addFlash('success', Yii::t($this->controller->i18nCategory, 'Data saved.'));
 
                 return $this->controller->redirect([
                     'update', 
@@ -67,18 +74,14 @@ class CreateAction extends BaseAction
             }
             else
             {
-                return $this->redirectBack();
+                return $this->controller->redirectBack();
             }
         }
 
-        $params = $this->getParams( 
-            ArrayHelper::merge($this->params, [
-                'model' => $model,
-                'ownerModel' => $ownerModel
-            ])
-        );
-
-        return $this->render($this->template, $params);
+        return $this->render($this->template, [
+            'model' => $model,
+            'parentModel' => $parentModel
+        ]);
     }
     
 }
