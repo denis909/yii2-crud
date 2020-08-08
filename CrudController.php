@@ -55,6 +55,11 @@ class CrudController extends \denis909\yii\Controller
             $return['delete'] = ['class' => $this->deleteActionClass];
         }
 
+        if ($this->viewActionClass)
+        {
+            $return['view'] = ['class' => $this->viewActionClass];
+        }
+
         return $return;
     }
 

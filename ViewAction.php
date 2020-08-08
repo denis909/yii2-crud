@@ -8,30 +8,17 @@ use yii\web\NotFoundHttpException;
 class ViewAction extends BaseAction
 {
 
-    public $templateName = 'view';
-            
-    public $beforeRender;
+    public $template = 'view';
 
     public function run()
     {
-        $model = $this->findModel(Yii::$app->request->get('id'), $this->controller->modelClass);
+        $id = Yii::$app->request->get('id');
+
+        $model = $this->controller->findModel($id, $this->controller->modelClass);
                 
-        if ($this->beforeRender != FALSE)
-        {
-            call_user_func_array(
-                $this->beforeRender, 
-                array(
-                    $model
-                )
-            );
-        }       
-        
-        return $this->controller->render(
-            $this->templateName,
-            $this->getParams([
-                'model' => $model
-            ])
-        );
+        return $this->render($this->template, [
+            'model' => $model
+        ]);
     }
 
 }
