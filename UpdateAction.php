@@ -14,14 +14,14 @@ class UpdateAction extends BaseAction
 
     public function run()
     {       
-        $model = $this->controller->findModel(Yii::$app->request->get('id'), $this->controller->formModelClass);
+        $model = $this->findModel(Yii::$app->request->get('id'), $this->controller->formModelClass);
         
         if ($this->scenario)
         {
             $model->scenario = $this->scenario;
         }
 
-        if ($this->controller->loadModel($model, Yii::$app->request->post()) && $this->controller->saveModel($model))
+        if ($this->loadModel($model, Yii::$app->request->post()) && $this->saveModel($model))
         {
             if (Yii::$app->request->post('action') == static::ACTION_SAVE)
             {

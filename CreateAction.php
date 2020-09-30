@@ -16,7 +16,7 @@ class CreateAction extends BaseAction
     {
         $className = $this->controller->formModelClass;
 
-        $model = $this->controller->createModel($className);
+        $model = $this->createModel($className);
 
         $parentModelClass = $this->controller->parentModelClass;
 
@@ -35,7 +35,7 @@ class CreateAction extends BaseAction
                 throw new Exception('Parent ID not defined.');
             }
 
-            $parentModel = $this->controller->findModel($parentId, $parentModelClass);
+            $parentModel = $this->findModel($parentId, $parentModelClass);
 
             $model->{$this->controller->parentAttribute} = $parentModel->primaryKey;
         }
@@ -47,7 +47,7 @@ class CreateAction extends BaseAction
 
         $model->loadDefaultValues(true);
 
-        if ($this->controller->loadModel($model, Yii::$app->request->post()) && $this->controller->saveModel($model))
+        if ($this->loadModel($model, Yii::$app->request->post()) && $this->saveModel($model))
         {
             if (Yii::$app->request->post('action') == static::ACTION_SAVE)
             {

@@ -14,7 +14,7 @@ class ViewAction extends BaseAction
     {
         $id = Yii::$app->request->get('id');
 
-        $model = $this->controller->findModel($id, $this->controller->modelClass);
+        $model = $this->findModel($id, $this->controller->modelClass);
                 
         return $this->render($this->template, [
             'model' => $model

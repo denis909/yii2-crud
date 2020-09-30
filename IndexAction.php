@@ -16,7 +16,7 @@ class IndexAction extends BaseAction
     {
         $className = $this->controller->modelClass;
 
-        $query = $this->controller->createModelQuery($className);
+        $query = $this->createQuery($className);
 
         $parentModel = null;
 
@@ -35,7 +35,7 @@ class IndexAction extends BaseAction
                 throw new Exception('Parent ID not defined.');
             }
 
-            $parentModel = $this->controller->findModel($parentId, $parentModelClass);
+            $parentModel = $this->findModel($parentId, $parentModelClass);
 
             $query->andWhere([$this->controller->parentAttribute => $parentModel->primaryKey]);
         }
