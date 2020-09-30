@@ -20,6 +20,8 @@ class CreateAction extends BaseAction
 
         $parentModelClass = $this->controller->parentModelClass;
 
+        $parentModel = null;
+
         if ($parentModelClass)
         {
             Assert::notEmpty($this->controller->parentAttribute);
