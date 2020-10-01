@@ -2,18 +2,12 @@
 
 namespace denis909\yii;
 
+use yii\web\NotFoundHttpException;
+use yii\base\Model;
+use denis909\yii\Assert;
+
 class CrudController extends \denis909\yii\Controller
 {
-
-    public $indexActionClass = IndexAction::class;
-
-    public $createActionClass = CreateAction::class;
-
-    public $updateActionClass = UpdateAction::class;
-
-    public $deleteActionClass = DeleteAction::class;
-
-    public $viewActionClass = ViewAction::class;
 
     public $modelClass;
 
@@ -30,6 +24,69 @@ class CrudController extends \denis909\yii\Controller
     public $pageSize = 10;
 
     public $dataProvider = [];
+
+    public $notFoundHttpExceptionClass = NotFoundHttpException::class;
+
+    public $indexActionClass = IndexAction::class;
+
+    public $createActionClass = CreateAction::class;
+
+    public $updateActionClass = UpdateAction::class;
+
+    public $deleteActionClass = DeleteAction::class;
+
+    public $viewActionClass = ViewAction::class;    
+
+    public function findModel($id, $modelClass = null)
+    {
+        if (!$modelClass)
+        {
+            $modelClass = $this->modelClass;
+        }
+
+        Assert::notEmpty($modelClass);
+
+        Assert::notEmpty($id);
+            
+        $model = $modelClass::findOne($id);
+        
+        if (!$model)
+        {
+            throw Yii::createObject($this->notFoundHttpExceptionClass, ['Page not found.']);
+        }
+
+        return $model;
+    }
+
+    public function createModel(string $className)
+    {
+        return $model = Yii::createObject($className);
+    }
+
+    public function createQuery(string $className)
+    {
+        return $className::find();
+    }    
+
+    public function loadModel(Model $model, array $data = [])
+    {
+        return $model->load($data);
+    }
+
+    public function saveModel(Model $model, bool $validate = true, array $attributes = null)
+    {
+        return $model->save($validate, $attributes);
+    }
+
+    public function validateModel(Model $model, $attributes = null)
+    {
+        return $model->validate($attributes);
+    }
+
+    public function deleteModel(Model $model)
+    {
+        return $model->delete();
+    }
     
     public function actions()
     {
