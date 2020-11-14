@@ -2,7 +2,6 @@
 
 namespace denis909\yii;
 
-use yii\web\NotFoundHttpException;
 use yii\base\Model;
 use denis909\yii\Assert;
 
@@ -25,8 +24,6 @@ class CrudController extends \denis909\yii\Controller
 
     public $dataProvider = [];
 
-    public $notFoundHttpExceptionClass = NotFoundHttpException::class;
-
     public $indexActionClass = IndexAction::class;
 
     public $createActionClass = CreateAction::class;
@@ -36,27 +33,6 @@ class CrudController extends \denis909\yii\Controller
     public $deleteActionClass = DeleteAction::class;
 
     public $viewActionClass = ViewAction::class;    
-
-    public function findModel($id, $modelClass = null)
-    {
-        if (!$modelClass)
-        {
-            $modelClass = $this->modelClass;
-        }
-
-        Assert::notEmpty($modelClass);
-
-        Assert::notEmpty($id);
-            
-        $model = $modelClass::findOne($id);
-        
-        if (!$model)
-        {
-            throw Yii::createObject($this->notFoundHttpExceptionClass, ['Page not found.']);
-        }
-
-        return $model;
-    }
 
     public function createModel(string $className)
     {
