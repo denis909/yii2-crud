@@ -19,7 +19,7 @@ abstract class BaseAction extends \yii\base\Action
     
     public $modelClass;
         
-    public $returnUrl;
+    public $backUrl;
 
     public $ownerClass;
 
