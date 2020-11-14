@@ -29,7 +29,7 @@ class UpdateAction extends BaseAction
             }
             else
             {
-                return $this->controller->redirectBack();
+                return $this->controller->goBack();
             }
         }
         

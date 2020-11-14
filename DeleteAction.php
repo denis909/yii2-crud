@@ -16,7 +16,7 @@ class DeleteAction extends BaseAction
             throw new Exception('Model not deleted.');
         }
     
-        return $this->controller->redirectBack();
+        return $this->controller->goBack();
     }
 
 }
