@@ -56,7 +56,7 @@ class CreateAction extends BaseAction
                 return $this->controller->redirect([
                     'update', 
                     'id' => $model->primaryKey,
-                    'backUrl' => Yii::$app->request->get('backUrl')
+                    'returnUrl' => Yii::$app->request->get('returnUrl')
                 ]);
             }
             else
