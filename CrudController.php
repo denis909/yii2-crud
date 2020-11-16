@@ -42,9 +42,9 @@ class CrudController extends \denis909\yii\Controller
         return Yii::t($this->i18nCategory, $name, $params);
     }
 
-    public function createModel(string $className)
+    public function createModel(string $className, array $params = [])
     {
-        return $model = Yii::createObject($className);
+        return $className::instantiate($params);
     }
 
     public function createQuery(string $className)
