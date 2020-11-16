@@ -2,6 +2,7 @@
 
 namespace denis909\yii;
 
+use Yii;
 use yii\base\Model;
 use denis909\yii\Assert;
 
