@@ -33,7 +33,14 @@ class CrudController extends \denis909\yii\Controller
 
     public $deleteActionClass = DeleteAction::class;
 
-    public $viewActionClass = ViewAction::class;    
+    public $viewActionClass = ViewAction::class;
+
+    public $i18nCategory = 'app';
+
+    public function t(string $name, array $params = []) : string
+    {
+        return Yii::t($this->i18nCategory, $name, $params);
+    }
 
     public function createModel(string $className)
     {
