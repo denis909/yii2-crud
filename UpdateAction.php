@@ -13,7 +13,9 @@ class UpdateAction extends BaseAction
     public $scenario;
 
     public function run()
-    {       
+    {
+        assert($this->controller->formModelClass ? true : false, get_class($this->controller) . '::formModelClass');
+        
         $model = $this->findModel(Yii::$app->request->get('id'), $this->controller->formModelClass);
         
         if ($this->scenario)

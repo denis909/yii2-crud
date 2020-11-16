@@ -14,9 +14,9 @@ class IndexAction extends BaseAction
         
     public function run()
     {
-        $className = $this->controller->modelClass;
+        assert($this->controller->modelClass ? true : false, get_class($this->controller) . '::modelClass');
 
-        $query = $this->createQuery($className);
+        $query = $this->createQuery($this->controller->modelClass);
 
         $parentModel = null;
 

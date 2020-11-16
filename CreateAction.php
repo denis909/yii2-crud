@@ -14,9 +14,9 @@ class CreateAction extends BaseAction
     
     public function run()
     {
-        $className = $this->controller->formModelClass;
+        assert($this->controller->formModelClass ? true : false, get_class($this->controller) . '::formModelClass');
 
-        $model = $this->createModel($className);
+        $model = $this->createModel($this->controller->formModelClass);
 
         $parentModelClass = $this->controller->parentModelClass;
 
